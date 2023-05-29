@@ -1,4 +1,25 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 export default function WelcomePage(){
+
+    // const [user,setUser] = useState(getUserDetaiols);
+    const [userEmail,setUserEmail] = useState('');
+    const [userName,setUserName] = useState('');
+    const navigate = useNavigate()
+
+    // form submit 
+    const handleAddUser = (ev) => {
+        ev.preventDefault();
+        // creating an object
+        let user = {
+            userEmail,
+            userName,
+        }
+        localStorage.setItem('user',JSON.stringify(user));
+        navigate('/MainPage');
+    }
+
     return (
         <div className="flex flex-row h-screen">
             <div className="flex flex-col w-1/4">
@@ -11,7 +32,15 @@ export default function WelcomePage(){
                     </p>
                 </div>
                 <div className="mx-auto my-20">
-                    <button className="w-60">Get Started</button>
+                    <form onSubmit={handleAddUser}>
+                        <input type="text" value={userName} 
+                        placeholder="your name"
+                        onChange={(ev) => setUserName(ev.target.value)}/>
+                        <input type="email" value={userEmail} 
+                        placeholder="your email"
+                        onChange={(ev) => setUserEmail(ev.target.value)}/>
+                        <button className="w-60">Get Started</button>
+                    </form>
                 </div>
             </div>
             <div className="bg-indigo-300 w-3/4">
