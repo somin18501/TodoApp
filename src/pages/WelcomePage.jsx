@@ -1,23 +1,30 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function WelcomePage(){
+const getFirst = ()=>{
+    const d = localStorage.getItem('taskNameList');
+    if(d)return JSON.parse(d)[0];
+    else{
+        let d = ["General"];
+        localStorage.setItem("taskNameList",JSON.stringify(d));
+        return d[0];
+    }
+}
 
-    // const [user,setUser] = useState(getUserDetaiols);
+export default function WelcomePage(){
     const [userEmail,setUserEmail] = useState('');
     const [userName,setUserName] = useState('');
     const navigate = useNavigate()
-
-    // form submit 
+    const first = getFirst();
+    
     const handleAddUser = (ev) => {
         ev.preventDefault();
-        // creating an object
         let user = {
             userEmail,
             userName,
         }
         localStorage.setItem('user',JSON.stringify(user));
-        navigate('/MainPage');
+        navigate(`/${first}`);
     }
 
     return (
