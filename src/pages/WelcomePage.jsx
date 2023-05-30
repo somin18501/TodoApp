@@ -12,13 +12,17 @@ const getFirst = ()=>{
 }
 
 export default function WelcomePage(){
+
+    // const [user,setUser] = useState(getUserDetaiols);
     const [userEmail,setUserEmail] = useState('');
     const [userName,setUserName] = useState('');
     const navigate = useNavigate()
     const first = getFirst();
-    
+
+    // form submit 
     const handleAddUser = (ev) => {
         ev.preventDefault();
+        // creating an object
         let user = {
             userEmail,
             userName,
@@ -30,7 +34,7 @@ export default function WelcomePage(){
     return (
         <div className="flex flex-row h-screen">
             <div className="flex flex-col w-1/4">
-                <div className="mt-60">
+                <div className="mt-40">
                     <h1 className="text-left text-4xl pl-10">WelCome to <br/> Uno ToDo</h1>
                 </div>
                 <div className="mt-5">
@@ -38,15 +42,19 @@ export default function WelcomePage(){
                         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quod soluta aut distinctio voluptatum eaque, consequatur perspiciatis corrupti blanditiis est delectus.
                     </p>
                 </div>
-                <div className="mx-auto my-20">
+                <div className="my-10">
                     <form onSubmit={handleAddUser}>
-                        <input type="text" value={userName} 
-                        placeholder="your name"
-                        onChange={(ev) => setUserName(ev.target.value)}/>
-                        <input type="email" value={userEmail} 
-                        placeholder="your email"
-                        onChange={(ev) => setUserEmail(ev.target.value)}/>
-                        <button className="w-60">Get Started</button>
+                        <div className="flex flex-col mx-10">
+                            <input type="text" value={userName} 
+                            placeholder="your name"
+                            onChange={(ev) => setUserName(ev.target.value)}/>
+                            <input type="email" value={userEmail} 
+                            placeholder="your email"
+                            onChange={(ev) => setUserEmail(ev.target.value)}/>
+                        </div>
+                        <div className="flex justify-around">
+                            <button className="my-5 w-60">Get Started</button>
+                        </div>
                     </form>
                 </div>
             </div>
