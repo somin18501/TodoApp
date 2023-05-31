@@ -1,45 +1,54 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { Button, Dialog, DialogTitle, TextField, DialogActions, DialogContent } from "@material-ui/core";
-
-const getTaskNameList = ()=>{
-    const tln = localStorage.getItem('taskNameList')
-    if(tln){
-        return JSON.parse(tln);
-    }
-    else return [];
-}
-
-const getuserLS = ()=>{
-    const data = localStorage.getItem('user');
-    if(data){
-        // to get object in JSON from string
-        return JSON.parse(data);
-    }else {
-        return [];
-    }
-}  
+import { useSelector,useDispatch } from "react-redux";
+import { DeleteTaskNameList, EditTaskNameList, addNewList, setTaskInformation } from "./redux/actions";
 
 export default function Sidebar(){
-    const user = getuserLS();
-    const [taskNameList,setTaskNameList] = useState(getTaskNameList);
+    const state = useSelector(state=>state.task);
+    const navigate = useNavigate();
     const [listName,setListName] = useState('');
     const [open, setOpen] = useState(false);
+    const dispatch = useDispatch();
+    const [newName,setNewName] = useState("");
 
     const handleAddNewTaskList = ()=>{
         setOpen(true);
     }
 
+    // const handleEdit = (name)=>(e)=>{
+    //     e.preventDefault();
+    //     dispatch(EditTaskNameList({initialName:name,finalName:newName}));
+    //     navigate(`/${newName}`);
+    //     setNewName("");
+    // }
+    // const handleDelete = (name)=>(e)=>{
+    //     e.preventDefault();
+    //     dispatch(DeleteTaskNameList(name));
+    //     navigate("/General");
+    // }
+    // const renderOptions = (name)=>{
+    //     return(
+    //         <>
+    //             <input type="text" value={newName} placeholder="Enter new name" onChange={e=>setNewName(e.target.value)}/>
+    //             <button onClick={(e)=>handleEdit(name)(e)}>Edit</button>
+    //             <br /><button onClick={e=>handleDelete(name)(e)}>Delete</button>
+    //         </>
+    //     )
+    // }
     const handleClose = () => {
-        setTaskNameList([...taskNameList,listName])
         setListName('')
         setOpen(false);
     };
-
     useEffect(()=>{
-        localStorage.setItem('taskNameList',JSON.stringify(taskNameList))
-    },[taskNameList])
-    
+        dispatch(setTaskInformation());
+    },[]);
+    const handleAddNewList = ()=>{
+        dispatch(addNewList(listName));
+        setOpen(false)
+        setListName("");
+        navigate(`/${listName}`);
+    }
     return (
         <div className="flex flex-col w-1/5">
             <div className="flex flex-row justify-around mx-5 mt-4">
@@ -50,10 +59,10 @@ export default function Sidebar(){
                 </div>
                 <div className="mr-10">
                     <div className="text-lg">
-                        {user.userName}
+                        {state.user.userName}
                     </div>
                     <div className="text-sm pb-1">
-                        {user.userEmail}
+                        {state.user.userEmail}
                     </div>
                 </div> 
             </div>
@@ -79,7 +88,7 @@ export default function Sidebar(){
                 <hr />
             </div>
             <div className="flex flex-col mt-5">
-                {taskNameList.length > 0 && taskNameList.map(name=>(
+                {state.taskNameList.length > 0 && state.taskNameList.map(name=>(
                     <div className="flex flex-row mx-5 my-5 justify-between">
                         <div className="mx-4">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -87,7 +96,8 @@ export default function Sidebar(){
                             </svg>
                         </div>
                         <div className="mr-10">
-                            <Link to={'/'+name}>{name}</Link>
+                            <Link to={'/'+name}>{name}</Link> 
+                            {/* {name !== "General" && renderOptions(name)} */}
                         </div>
                         <div className="mr-5">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -116,7 +126,7 @@ export default function Sidebar(){
                     </DialogContent>
                     <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleClose}>Create</Button>
+                    <Button onClick={handleAddNewList}>Create</Button>
                     </DialogActions>
                 </Dialog>
             </div>
