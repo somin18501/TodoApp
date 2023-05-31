@@ -2,38 +2,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {useDispatch} from "react-redux"
 import {setUser} from "../redux/actions"
-const getFirst = ()=>{
-    let d = localStorage.getItem('taskNameList');
-    if(d){
-        d = JSON.parse(d);
-        if(d.length > 0){
-            return d[0];
-        }
-        else{
-            d = ["General"];
-            localStorage.setItem("taskNameList",JSON.stringify(d));
-            return d[0];
-        }
-    }
-    else{
-        let d = ["General"];
-        localStorage.setItem("taskNameList",JSON.stringify(d));
-        return d[0];
-    }
-}
 
 export default function WelcomePage(){
     const dispatch = useDispatch();
-    // const [user,setUser] = useState(getUserDetaiols);
     const [userEmail,setUserEmail] = useState('');
     const [userName,setUserName] = useState('');
     const navigate = useNavigate()
-    const first = getFirst();
-
-    // form submit 
+     
     const handleAddUser = (ev) => {
         ev.preventDefault();
-        // creating an object
         let user = {
             userEmail,
             userName,

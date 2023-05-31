@@ -12,37 +12,19 @@ export default function Sidebar(){
     const dispatch = useDispatch();
     const [newName,setNewName] = useState("");
 
-    const handleAddNewTaskList = ()=>{
+    const handleOpen = ()=>{
         setOpen(true);
     }
 
-    // const handleEdit = (name)=>(e)=>{
-    //     e.preventDefault();
-    //     dispatch(EditTaskNameList({initialName:name,finalName:newName}));
-    //     navigate(`/${newName}`);
-    //     setNewName("");
-    // }
-    // const handleDelete = (name)=>(e)=>{
-    //     e.preventDefault();
-    //     dispatch(DeleteTaskNameList(name));
-    //     navigate("/General");
-    // }
-    // const renderOptions = (name)=>{
-    //     return(
-    //         <>
-    //             <input type="text" value={newName} placeholder="Enter new name" onChange={e=>setNewName(e.target.value)}/>
-    //             <button onClick={(e)=>handleEdit(name)(e)}>Edit</button>
-    //             <br /><button onClick={e=>handleDelete(name)(e)}>Delete</button>
-    //         </>
-    //     )
-    // }
     const handleClose = () => {
         setListName('')
         setOpen(false);
     };
+
     useEffect(()=>{
         dispatch(setTaskInformation());
     },[]);
+
     const handleAddNewList = ()=>{
         dispatch(addNewList(listName));
         setOpen(false)
@@ -97,7 +79,6 @@ export default function Sidebar(){
                         </div>
                         <div className="mr-10">
                             <Link to={'/'+name}>{name}</Link> 
-                            {/* {name !== "General" && renderOptions(name)} */}
                         </div>
                         <div className="mr-5">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -107,28 +88,35 @@ export default function Sidebar(){
                     </div>
                 ))}
             </div>
-            <div className="absolute bottom-0 left-0">
-                <Button onClick={handleAddNewTaskList}>add</Button>
-                <Dialog open={open} onClose={handleClose}>
-                    <DialogTitle>New List</DialogTitle>
-                    <DialogContent>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="List Name"
-                        type="text"
-                        fullWidth
-                        variant="standard"
-                        value={listName} 
-                        onChange={(ev) => setListName(ev.target.value)}
-                    />
-                    </DialogContent>
-                    <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleAddNewList}>Create</Button>
-                    </DialogActions>
-                </Dialog>
+            <div className="absolute bottom-5 left-0 flex flex-row mx-10 items-center">
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                    <path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div>
+                    <Button onClick={handleOpen}>New List</Button>
+                    <Dialog open={open} onClose={handleClose}>
+                        <DialogTitle>New List</DialogTitle>
+                        <DialogContent>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="List Name"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            value={listName} 
+                            onChange={(ev) => setListName(ev.target.value)}
+                        />
+                        </DialogContent>
+                        <DialogActions>
+                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button onClick={handleAddNewList}>Create</Button>
+                        </DialogActions>
+                    </Dialog>
+                </div>
             </div>
         </div>
     );

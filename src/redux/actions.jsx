@@ -6,8 +6,8 @@ export const counterSlice = createSlice({
       user:{userName:"",userEmail:""},
         taskNameList:["General"],
         tasks:[]
-  },
-  reducers: {
+    },
+    reducers: {
     setUser:(state,obj)=>{
         localStorage.setItem("user",JSON.stringify(obj.payload));
         state.user = obj.payload;
