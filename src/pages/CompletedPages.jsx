@@ -1,8 +1,7 @@
-import {useParams,useNavigate,Link} from "react-router-dom"
-import {useState,useEffect} from "react"
+import {useParams,useNavigate} from "react-router-dom"
+import {useState} from "react"
 import { useDispatch,useSelector } from "react-redux";
-import { setTaskInformation,addTask } from "../redux/actions";
-import {DeleteTaskNameList, EditTaskNameList, makeCompleted} from "../redux/actions"
+import {DeleteTaskNameList, EditTaskNameList, makeCompleted, makeImportant} from "../redux/actions"
 import AddTaskDialog from "../components/AddTaskDialog";
 import { Button, Dialog, DialogTitle, TextField, DialogActions, DialogContent } from "@material-ui/core";
 import Navbar from "../Navbar"
@@ -22,11 +21,7 @@ export default function MainPage(){
     const handleCancel = ()=>{
         setOpen(false);
     }
-
-    // useEffect(()=>{
-    //     dispatch(setTaskInformation())
-    // },[])
-
+    
     const handleEdit =(e)=>{
         e.preventDefault();
         dispatch(EditTaskNameList({initialName:str,finalName:newName}));
@@ -40,20 +35,15 @@ export default function MainPage(){
         navigate("/General");
     }
 
-    // const renderOptions = ()=>{
-    //     return(
-    //         <>
-    //             <input type="text" value={newName} placeholder="Enter new name" onChange={e=>setNewName(e.target.value)}/>
-    //             <button onClick={(e)=>handleEdit(e)}>Edit</button>
-    //             <br /><button onClick={e=>handleDelete(e)}>Delete</button>
-    //         </>
-    //     )
-    // }
+    const makeComplete = (index)=>(e)=>{
+        e.preventDefault();
+        dispatch(makeCompleted(index));
+    }
 
-    // const makeComplete = (index)=>(e)=>{
-    //     e.preventDefault();
-    //     dispatch(makeCompleted(index));
-    // }
+    const doImportant = (index)=>(e)=>{
+        e.preventDefault();
+        dispatch(makeImportant(index));
+    }
 
     return (
         <div className="flex flex-col bg-indigo-400 w-full">
@@ -92,43 +82,35 @@ export default function MainPage(){
                     }
                 </div>
             </div>
-            <Navbar />
+            <div className="mx-5">
+                <Navbar />
+            </div>
             <div>
                 <AddTaskDialog para={str}/>
             </div>
             <div>
                 {
-                    state.tasks.length > 0 && state.tasks.map(task=>((task.category === str) && (task.isCompleted===true) && (
-                            <div className="px-2 py-2 mx-5 bg-white rounded-lg">
-                                {task.name}
+                    state.tasks.length > 0 && state.tasks.map((task,index)=>((task.category === str) && (task.isCompleted===true) && (
+                            <div className="flex flex-row items-center px-2 py-2 mx-5 my-5 bg-white rounded-lg">
+                                <div>
+                                    <input type="checkbox" className="mx-2 my-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" checked onChange={makeComplete(index)} />
+                                </div>
+                                <div className="mx-2">
+                                    {task.name}
+                                </div>
+                                <div className="absolute right-12">
+                                {task.important===true && (
+                                    <input type="checkbox" className="star mb-10" onChange={doImportant(index)} />
+                                )}
+                                {task.important===false && (
+                                    <input type="checkbox" checked className="star mb-10" onChange={doImportant(index)} />
+                                )}
+                                </div>
                             </div>
                         )
                     ))
                 }
             </div>
         </div>
-
-
-        // <div className="w-full bg-indigo-400">
-        //         <h1>{str}</h1>
-        //         <br />
-        //         {str !== "General" && renderOptions()}
-        //         <br />
-        //         <Link to= {`/completed/${str}`}>View Completed</Link>
-        //         <br />
-        //         <input type="text" placeholder="Enter task Name" value={taskName} onChange={(e)=>setTaskName(e.target.value)}/>
-        //         <br />
-        //         <input type="text" placeholder="Enter task Description" value={taskDescription} onChange={(e)=>setTaskDescription(e.target.value)}/>
-        //         <br />
-        //         <input type="text" placeholder="Enter task Due Date" value={taskDate} onChange={(e)=>setTaskDate(e.target.value)}/>
-        //         <br />
-        //         <button onClick={handleNewTaskSubmit}>Submit</button>
-        //         <br />
-        //         {
-        //             state.tasks.length > 0 && state.tasks.map((task,index)=>(
-        //                 (task.category === str && task.isCompleted===false) && <div><button onClick={(e)=>makeComplete(index)(e)}>{task.name}:{task.description}</button></div>
-        //             ))
-        //         }
-        // </div>
     );
 }

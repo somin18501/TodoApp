@@ -17,3 +17,20 @@ textarea{
 input[type="search"]{
     @apply w-full py-2 px-4;
 }
+
+.star {
+    visibility:hidden;
+    font-size:30px;
+    cursor:pointer;
+}
+.star:before {
+   content: "\2605";
+   position: absolute;
+   visibility:visible;
+   color: red;
+}
+.star:checked:before {
+   content: "\2606";
+   position: absolute;
+   color: gray;
+}

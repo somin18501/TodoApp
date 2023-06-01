@@ -61,12 +61,16 @@ export const counterSlice = createSlice({
         localStorage.setItem("tasks",JSON.stringify(state.tasks));
     },
     makeCompleted:(state,index)=>{
-        state.tasks[index.payload].isCompleted = true;
+        state.tasks[index.payload].isCompleted = !state.tasks[index.payload].isCompleted;
+        localStorage.setItem("tasks",JSON.stringify(state.tasks));
+    },
+    makeImportant:(state,index)=>{
+        state.tasks[index.payload].important = !state.tasks[index.payload].important;
         localStorage.setItem("tasks",JSON.stringify(state.tasks));
     }
   },
 })
 
-export const { setUser, setTaskInformation, EditTaskNameList,DeleteTaskNameList,addNewList,addTask,makeCompleted } = counterSlice.actions
+export const { setUser, setTaskInformation, EditTaskNameList,DeleteTaskNameList,addNewList,addTask,makeCompleted, makeImportant } = counterSlice.actions
 
 export default counterSlice.reducer

@@ -1,15 +1,23 @@
 import { useEffect, useState } from "react";
 import { Button, Dialog, DialogTitle, TextField, DialogActions, DialogContent } from "@material-ui/core";
 import { setTaskInformation,addTask } from "../redux/actions";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 
 export default function AddTaskDialog({para}){
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
     const [taskName,setTaskName] = useState("");
-    const [taskDate,setTaskDate] = useState("");
+    const [taskDate,setTaskDate] = useState(new Date());
     const [taskDescription,setTaskDescription] = useState("");
-    
+
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    today = mm + '/' + dd + '/' + yyyy;
 
     const handleOpen = ()=>{
         setOpen(true);
@@ -26,7 +34,8 @@ export default function AddTaskDialog({para}){
             category: para,
             important:false,
             date:taskDate,
-            isCompleted:false
+            isCompleted:false,
+            createdon:today,
         };
         dispatch(addTask(task));
         setTaskDate("");
@@ -55,7 +64,7 @@ export default function AddTaskDialog({para}){
                         autoFocus
                         margin="dense"
                         id="name"
-                        label="List Name"
+                        label="Task Name"
                         type="text"
                         fullWidth
                         variant="standard"
@@ -66,13 +75,18 @@ export default function AddTaskDialog({para}){
                         autoFocus
                         margin="dense"
                         id="name"
-                        label="List Name"
+                        label="Task Description"
                         type="text"
                         fullWidth
                         variant="standard"
                         value={taskDescription} 
                         onChange={(ev) => setTaskDescription(ev.target.value)}
                     />
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['DatePicker']}>
+                        <DatePicker label="Add Due Date" selected={taskDate} onChange={(date) => setTaskDate(date)}/>
+                    </DemoContainer>
+                    </LocalizationProvider>
                     </DialogContent>
                     <DialogActions>
                     <Button onClick={handleCancel}>Cancel</Button>
