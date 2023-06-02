@@ -7,9 +7,10 @@ import { addNewList, setTaskInformation } from "./redux/actions";
 export default function Sidebar(){
     const state = useSelector(state=>state.task);
     const navigate = useNavigate();
-    const [listName,setListName] = useState('');
-    const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
+    const [listName,setListName] = useState('');
+    const [serachtxt,setSearchTxt] = useState('');
+    const [open, setOpen] = useState(false);
 
     const handleOpen = ()=>{
         setOpen(true);
@@ -47,8 +48,14 @@ export default function Sidebar(){
                     </div>
                 </div> 
             </div>
-            <div className="mt-5 mb-5 mx-5 border border-gray-300 shadow-md shadow-gray-300">
-                <input type="search" placeholder="search list" />
+            <div className="flex mt-5 mb-5 mx-5 border-b-2 border-gray-300">
+                <input className="bg-gray-200" type="search" placeholder="search task" value={serachtxt}
+                   onChange={ev => setSearchTxt(ev.target.value)}/>
+                <div className="border-r-2 border-t-2 border-gray-200 p-2 pr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                    </svg>
+                </div>
             </div>
             <Link to={'/Important'} className="flex flex-row mx-5 my-5">
                 <div className="mx-4">
@@ -65,7 +72,7 @@ export default function Sidebar(){
                     </svg>
                 </div>
             </Link>
-            <div className="mx-5 border-2">
+            <div className="mx-5 border-2 ">
                 <hr />
             </div>
             <div className="flex flex-col mt-5">

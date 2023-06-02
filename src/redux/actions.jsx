@@ -5,7 +5,8 @@ export const counterSlice = createSlice({
     initialState: {
       user:{userName:"",userEmail:""},
         taskNameList:["General"],
-        tasks:[]
+        tasks:[],
+        taskName:""
     },
     reducers: {
     setUser:(state,obj)=>{
@@ -67,10 +68,13 @@ export const counterSlice = createSlice({
     makeImportant:(state,index)=>{
         state.tasks[index.payload].important = !state.tasks[index.payload].important;
         localStorage.setItem("tasks",JSON.stringify(state.tasks));
-    }
+    },
+    setTaskName:(state,name)=>{
+        state.taskName = name.payload;
+    },
   },
 })
 
-export const { setUser, setTaskInformation, EditTaskNameList,DeleteTaskNameList,addNewList,addTask,makeCompleted, makeImportant } = counterSlice.actions
+export const { setUser, setTaskInformation, EditTaskNameList,DeleteTaskNameList,addNewList,addTask,makeCompleted, makeImportant, setTaskName } = counterSlice.actions
 
 export default counterSlice.reducer
