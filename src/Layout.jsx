@@ -11,7 +11,7 @@ export default function Layout(){
             <Sidebar/>
             <Outlet />
             { 
-                state.taskName !== "" && (
+                state.taskIndex !== "" && (
                     <DisplayBar/>
                 )
             }

@@ -6,7 +6,7 @@ export const counterSlice = createSlice({
       user:{userName:"",userEmail:""},
         taskNameList:["General"],
         tasks:[],
-        taskName:""
+        taskIndex:""
     },
     reducers: {
     setUser:(state,obj)=>{
@@ -70,11 +70,21 @@ export const counterSlice = createSlice({
         localStorage.setItem("tasks",JSON.stringify(state.tasks));
     },
     setTaskName:(state,name)=>{
-        state.taskName = name.payload;
+        state.taskIndex = name.payload;
     },
+    editTaskInformation:(state,obj)=>{
+        const index = obj.payload.index;
+        state.tasks[index] = obj.payload.task;
+        localStorage.setItem('tasks',JSON.stringify(state.tasks));
+    },
+    deleteTask:(state,index)=>{
+        state.tasks.splice(index.payload,1);
+        state.taskIndex = "";
+        localStorage.setItem('tasks',JSON.stringify(state.tasks))
+    }
   },
 })
 
-export const { setUser, setTaskInformation, EditTaskNameList,DeleteTaskNameList,addNewList,addTask,makeCompleted, makeImportant, setTaskName } = counterSlice.actions
+export const { setUser, setTaskInformation, EditTaskNameList,DeleteTaskNameList,addNewList,addTask,makeCompleted, makeImportant, setTaskName,editTaskInformation,deleteTask } = counterSlice.actions
 
 export default counterSlice.reducer
