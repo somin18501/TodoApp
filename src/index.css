@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-button{
-    background-color: #1532F1;
-    @apply p-2 text-white rounded-2xl;
-}
-
 input[type="text"],input[type="password"],
 input[type="email"],input[type="number"],
 input[type="time"],input[type="tel"],

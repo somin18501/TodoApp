@@ -58,7 +58,7 @@ export default function MainPage(){
 
     function linkClasses(){
         let classes = 'flex flex-col bg-indigo-400'
-        if(state.taskName === ""){
+        if(state.taskIndex === ""){
             classes += ' w-full';
         }else{
             classes += ' w-3/4'

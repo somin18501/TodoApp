@@ -47,7 +47,7 @@ export default function MainPage(){
 
     function linkClasses(){
         let classes = 'flex flex-col bg-indigo-400'
-        if(state.taskName === ""){
+        if(state.taskIndex === ""){
             classes += ' w-full';
         }else{
             classes += ' w-3/4'
@@ -101,7 +101,7 @@ export default function MainPage(){
             <div>
                 {
                     state.tasks.length > 0 && state.tasks.map((task,index)=>((task.category === str) && (task.isCompleted===true) && (
-                            <div className="relative flex flex-row items-center px-2 py-2 mx-5 my-5 bg-white rounded-lg cursor-pointer" onClick={()=>dispatch(setTaskName(task.name))}>
+                            <div className="relative flex flex-row items-center px-2 py-2 mx-5 my-5 bg-white rounded-lg cursor-pointer" onClick={()=>dispatch(setTaskName(index))}>
                                 <div>
                                     <input type="checkbox" className="mx-2 my-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" checked onChange={makeComplete(index)} />
                                 </div>
