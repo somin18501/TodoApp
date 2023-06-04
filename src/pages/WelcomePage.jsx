@@ -41,7 +41,7 @@ export default function WelcomePage(){
                             onChange={(ev) => setUserEmail(ev.target.value)}/>
                         </div>
                         <div className="flex justify-around">
-                            <button className="my-5 w-60">Get Started</button>
+                            <button className="bg-blue-700 p-2 text-white rounded-2xl my-5 w-60">Get Started</button>
                         </div>
                     </form>
                 </div>
