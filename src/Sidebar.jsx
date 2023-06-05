@@ -39,7 +39,7 @@ export default function Sidebar(){
 
     return (
         <div className="flex flex-col w-1/5">
-            <div className="flex flex-row justify-around mx-5 mt-4">
+            <Link to={'/General'} className="flex flex-row justify-around mx-5 mt-4">
                 <div className="mx-2 pt-3">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="blue" className="w-6 h-6">
                         <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clipRule="evenodd" />
@@ -53,14 +53,20 @@ export default function Sidebar(){
                         {state.user.userEmail}
                     </div>
                 </div> 
-            </div>
+            </Link>
             <div>
                 <form className="flex mt-5 mb-5 mx-5 border-b-2 border-gray-300">
                     <input className="bg-gray-200" 
                             type="search" 
                             placeholder="search task" 
                             value={serachtxt}
-                            onChange={(ev) => {setSearchTxt(ev.target.value);if(ev.target.value !== '') {navigate(`/search/${ev.target.value}`)}}}
+                            onChange={(ev) => {
+                                                setSearchTxt(ev.target.value);
+                                                if(ev.target.value !== ''){
+                                                    navigate(`/search/${ev.target.value}`)
+                                                }
+                                            }
+                                        }
                             />
                     <button className="border-r-2 border-t-2 border-gray-200 p-2 pr-3" onClick={handleSubmit} type="submit">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

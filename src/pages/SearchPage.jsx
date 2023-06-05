@@ -1,5 +1,4 @@
-import {useParams,useNavigate} from "react-router-dom"
-import { useState} from "react"
+import {useParams} from "react-router-dom"
 import { useDispatch,useSelector } from "react-redux";
 import { makeCompleted, makeImportant, setTaskName} from "../redux/actions"
 
