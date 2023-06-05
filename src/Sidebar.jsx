@@ -60,7 +60,7 @@ export default function Sidebar(){
                             type="search" 
                             placeholder="search task" 
                             value={serachtxt}
-                            onChange={ev => setSearchTxt(ev.target.value)}
+                            onChange={(ev) => {setSearchTxt(ev.target.value);if(ev.target.value !== '') {navigate(`/search/${ev.target.value}`)}}}
                             />
                     <button className="border-r-2 border-t-2 border-gray-200 p-2 pr-3" onClick={handleSubmit} type="submit">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

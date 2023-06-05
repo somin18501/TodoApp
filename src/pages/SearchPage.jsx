@@ -8,7 +8,7 @@ export default function SearchPage(){
     const state = useSelector(state=>state.task);
     const dispatch = useDispatch();
 
-    const res = state.tasks.filter((task)=>{return task.name.toLowerCase().startsWith(str.toLowerCase())});
+    const res = state.tasks.filter((task)=>{return task.name.toLowerCase().includes(str.toLowerCase())});
 
     const makeComplete = (index)=>(e)=>{
         e.preventDefault();
@@ -60,7 +60,7 @@ export default function SearchPage(){
                     )
                 }
                 {
-                    res.length === 0 && (
+                    str === '' || res.length === 0 && (
                         <div className="h-screen flex flex-row items-center justify-center text-white text-2xl">
                             No Such Task Found
                         </div>
