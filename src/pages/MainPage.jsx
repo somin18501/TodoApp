@@ -125,7 +125,7 @@ export default function MainPage(){
             <div>
                 {
                     state.tasks.length > 0 && state.tasks.map((task,index)=>((task.category === str) && (task.isCompleted===false) && (
-                            <div className="relative flex flex-row items-center px-2 py-2 mx-5 my-5 bg-white rounded-lg">
+                            <div key = {index} className="relative flex flex-row items-center px-2 py-2 mx-5 my-5 bg-white rounded-lg">
                                 <div>
                                     <input type="checkbox" className="cursor-pointer mx-2 my-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" onChange={makeComplete(index)} />
                                 </div>
