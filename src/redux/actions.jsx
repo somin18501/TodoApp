@@ -21,6 +21,7 @@ export const counterSlice = createSlice({
         }
         else{
             state.taskNameList = ["General"];
+            localStorage.setItem('taskNameList',JSON.stringify(state.taskNameList));
         }
         d = localStorage.getItem("tasks");
         if(d){
